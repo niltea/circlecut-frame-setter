@@ -128,3 +128,15 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Images
+.psd
+
+#
+source/*
+dest/*
+
+# Misc
+.DS_Store
+.fleet
+.idea
