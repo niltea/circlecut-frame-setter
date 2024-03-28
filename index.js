@@ -9,27 +9,10 @@ const destDir = './dest/';
 const template1SP = './resource/1sp-narrow.png';
 const template2SP = './resource/2sp-narrow.png';
 
-const exts = ['.jpg', '.png'];
+const extensions = ['.jpg', '.png'];
 
 const width1SP = 827;
-const height = 1205;
 const density = 600;
-
-const sharpOptions = {
-  'jpg' : [
-    'jpg',
-    {
-      quality: 100,
-      progressive: true
-    }
-  ],
-  'png' : [
-    'png',
-    {
-      quality: 100,
-    }
-  ]
-};
 
 const replaceFilePath = (beforeDir, afterDir, filePath) => path.join(afterDir, path.relative(beforeDir, filePath));
 
@@ -37,8 +20,7 @@ const replaceFilePath = (beforeDir, afterDir, filePath) => path.join(afterDir, p
 function placeFlame(srcPath, destPath) {
   const extname = path.extname(srcPath).toLowerCase();
 
-  if (exts.includes(extname)) {
-    const formatOptions = /\.png$/i.test(srcPath) ? sharpOptions.png : sharpOptions.jpg;
+  if (extensions.includes(extname)) {
     sharp(srcPath).metadata().then((metadata) => {
       const templateFile = (metadata.width === width1SP) ? template1SP : template2SP;
       sharp(srcPath)
