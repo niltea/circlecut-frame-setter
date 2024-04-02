@@ -36,6 +36,8 @@ function placeFlame(srcPath, destPath) {
             console.error('An error occurred while processing image:', err);
           } else {
             console.log('Converted image:', srcPath);
+            // 元データは消しておく
+            fsExtra.removeSync(srcPath);
           }
         });
     });
@@ -52,6 +54,7 @@ function placeFlame(srcPath, destPath) {
 }
 
 const main = async () => {
+  fsExtra.ensureDir(srcDir);
   // watch image files
   const srcWatcher = chokidar.watch(srcDir, {
     ignored: /(^|[\/\\])\../, // 隠しファイルを無視
@@ -64,10 +67,8 @@ const main = async () => {
         placeFlame(filePath, targetFilePath);
       } else if( event === 'addDir' ){
         fsExtra.ensureDirSync(targetFilePath);
-      } else if( event === 'unlinkDir' ){
-        fsExtra.removeSync(targetFilePath);
       } else if( event === 'unlink' ){
-        fsExtra.removeSync(targetFilePath);
+        // Do nothing.
       }
     })
 }
